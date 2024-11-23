@@ -6,6 +6,7 @@ import time
 from pydub import AudioSegment
 from pydub.playback import play
 import pygame
+import sys
 
 # Initialize pygame mixer
 pygame.mixer.init()
@@ -17,6 +18,67 @@ pygame.mixer.music.load("song.wav")
 pygame.mixer.music.play(-1) 
 
 print("Music is playing in the background!")
+
+shelf = '''
+                                                         
+                                                         
+                                                         
+         .......................................         
+      :*===------::::::------:::----:::::-======+*:      
+    :%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-    
+    :#####################################*########%:    
+     -#*#######*#####**##########################%%=     
+      ==********************#**********************      
+      ===:::::::::::--=====+%=--:---============+*+      
+      ===::::-##****##*:::-+%=::::-##****###:--=+#+      
+      ===:-::-*+*###*+=::---%=:::::*+*###*+=::-:=*+      
+      ===::::::::::::::::::-%=::::::::::::::::::-#+      
+      ==%%%%%%%%%%%%%%%%%%%%#%%%%%%%%%%%%%%%%%%%%*+      
+      ====+++++++++++++++++++++++++++++++++++++++*+      
+      ===:---::::::::::::::::::::::::---========+*+      
+      ===:::::::::::::::%=..:-=+%-::::::::-:::--+*+      
+      ===:::::::::::::::-:-----:-:::::::::::::::=*+      
+      =+=::-----------------------------------:-=#+      
+      =-++***************************************++      
+      ===--=====================================+*+      
+      ===:::::::::::::::-:-::-:-:-:::::-----====+*+      
+      ===:-::::::::::::-*=...:==*-::::::::::::-:=*+      
+      ===::::::::::::-:-:-:::::-::::::::::::::::=*+      
+      ===::::--::----:::::::::::::----::::--::::=#+      
+      =:----------------------------=+++=======++=+      
+      .=-=+%-                               -#-==*.      
+                                                         
+                                                         
+                                                         
+                                                         
+                ..   .  .        - .:=:.:-:..            
+               ....   . .. ...   ..     .....            '''
+
+bed_img = '''
+                                 :--====--:.             
+                          ==+--=+=+++++++===+=-          
+                         .*+**+++*+======+++++==+.       
+                         .@*#+==*  .....-+*+==++=++.     
+                          +++=*:            :+****=+*=== 
+                          :+++:                ++=+**+++ 
+   :                    .+@+-*:             .==*+==*#+*+ 
+ +====             .-*:     .--.           .+-=++==+***= 
+ =+**-    .....:*#*******#+:.   =+:..      -==#*++++**#= 
+ :*+#++*=========*#***********#*-:. .-====:.-+=-:-=*#*#- 
+ .***==++++***+*++===****************=::   .. .*+==+**#: 
+ .#*#+============+++==+##***+*#********#++-::.*===+**%: 
+ .#+*================++==+%%===%*******#####...*===+**%. 
+ .#+*==================+*==*##******##%#####...*===+**%. 
+ .#+*====================++**+**#%#########*...+==****%. 
+  *+*=====================+@#**############*...+-.  :+-  
+  *+#+=====================##**############*.:+=         
+  *+*- -*#+================##**###########%*.            
+   :.       -#*============##**########%=                
+                 +*+=======##**######:                   
+                     :++=+=##**###:                      
+                         .=%#**:                         
+                           -#**.               ..........
+                            -++.              =**########'''
 
 blood_img = '''
 
@@ -142,18 +204,28 @@ points = int(0)
 
 def check_game_status():
     global turns
-    print("Turns left:", turns)
+    print("You have", turns, "turns to find the killer")
     if turns == 0 or points >= 5:
         conclusion()
 
+def type_effect(text, delay=0.05):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
+    print() 
+
 def conclusion():
-    print("\n", ("-") * 20)
-    print(("-") * 20)
-    print("It clicks, no wonder these clues were so familiar, you are the killer.")
-    ascii_art = pyfiglet.figlet_format("You are your own enemy")
+    print("\n", "-" * 40)
+    print("-" * 40)
+    type_effect("The pieces fall into place...", 0.05)
+    type_effect("A chilling realization dawns upon you.", 0.05)
+    type_effect("The clues lead back to someone...", 0.05)
+    type_effect("You are the killer.", 0.1) 
+    print("-" * 40)
+    ascii_art = pyfiglet.figlet_format("You are your own enemy", font="slant")
     print(ascii_art)
-    print(("-") * 20)
-    print(("-") * 20)
+    print("-" * 40)
     quit()
 
 def room():
@@ -161,8 +233,9 @@ def room():
     def bed():
         global points
         global turns
+        print(bed_img)
         print("You duck down and search inside\n")
-        for i in tqdm(range(101), desc="Searching…", ascii=False, ncols=75):
+        for i in tqdm(range(200), desc="Searching…", ascii=False, ncols=75):
             time.sleep(0.01)
         print("\nYou find a familiar looking teddy bear.\n")
         print(bear)
@@ -177,8 +250,9 @@ def room():
     def drawer():
         global points
         global turns
+        print(shelf)
         print("You examine the drawer")
-        for i in tqdm(range(101), desc="Searching…", ascii=False, ncols=75):
+        for i in tqdm(range(200), desc="Searching…", ascii=False, ncols=75):
             time.sleep(0.01)
         print("\nYou found a ring, it looks familiar...\n")
         print(ring)
@@ -308,7 +382,8 @@ ascii_art = pyfiglet.figlet_format("Welcome")
 print(detective)
 
 print("\nDetective, You arrive at the murder scene in a bedroom. What do you do?")
-print("You will have 5 turns to find which evil person did it.")
-print("Navigate by submitting numbers shown in menus")
+print("You have 5 turns to unravell this mystery.")
+print("Use numbers to progress through the story, pay close attention to every detail.")
+print("Hurry up, The truth awaits and time is running out!")
 
 initial()
