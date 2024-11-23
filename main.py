@@ -18,6 +18,62 @@ pygame.mixer.music.play(-1)
 
 print("Music is playing in the background!")
 
+blood_img = '''
+
+
+                        ..                 
+                       =##:                
+               ==.     *##.                
+              :##+    .##*                 
+              .%#+    -##:                 
+         +*.   *#*   .*#*  :.              
+         =%#   +###++####+###:.            
+          .%#-=%###########=+#*            
+           =####%%############- .-=-       
+   .-:..  :%######%################=       
+  .+#*****%%########%###########=:.        
+           #%%########%########:           
+           #%%%########%%######*=--:       
+         .+%%%%%%########%%####+++*=.      
+      .-*%*+*%%%%%%%#####*=*%#.            
+     :#%*.   -%%*-:.-*%%:   =#.            
+      ..     +#.     :#*.   :%*            
+            *#       =%*.    :.            
+          .#%:      .*%=                   
+          #%+        ..                    
+          :.                               
+
+                                           '''
+
+detective = '''
+                                   -@@=.+@@-                                     
+                                   @@@@@@@@@                                     
+                                  +@@@@@@@@@+                                    
+                                  *@@@@@@@@@@:.                                  
+                             @@@@@@@@@@@@@@@@@@@@:                               
+                                  @@@@@@@@@@@                                    
+                                  =@@@@@@@@@.                                    
+                                   #@@@@@@@*                                     
+                                 %@@@@@@@@@=@@.                                  
+                              .@@@@#+@@@@@@.@@@@@                                
+                             @@@@@@   @@@%  @@@%                                 
+                             :=*@@@   @#%. @@@@@@@@@@@#                          
+                       :@@@@@@@@@@#    @% *@@@@@@@@@@@@:                         
+                       =@@@@@@@@@@@   :@* =@@@@@@@@@@@@@                         
+                       #@@@@@@@@@@@.  +@@ @@@@@@@@@@@@@@-                        
+                       @@@@@@@@@@@@-@.#@@%@@@@@@@@@@@@@@@+                       
+                       =@@@@@@@@@@@%@@@@@@@@@@@@@@@@@@@@@-                       
+                       @@@@@@@@@@@@#@@@@@@@@@@@@@@@@@@@@@%                       
+                      *@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+                       
+                      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:                     
+                     %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.@@@@@@@.                    
+                     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -@@@@@@.                    
+                      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ +@@@@@+                     
+                      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@-  #@@@@@                     
+                      +@@@@@@@@@@@@@@@@@@@@@@@@@@@@  :@@@@@%                     
+                      =@@@@@@@@@@@@@@@@@@@@@@@@@@@@# %@@@@@                      
+                      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.                      
+                       -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%                        '''
 
 bear = '''
            .=##*##=           -##*##=.           
@@ -91,13 +147,14 @@ def check_game_status():
         conclusion()
 
 def conclusion():
-    print(("-") * 20)
+    print("\n", ("-") * 20)
     print(("-") * 20)
     print("It clicks, no wonder these clues were so familiar, you are the killer.")
     ascii_art = pyfiglet.figlet_format("You are your own enemy")
     print(ascii_art)
     print(("-") * 20)
     print(("-") * 20)
+    quit()
 
 def room():
 
@@ -109,7 +166,7 @@ def room():
             time.sleep(0.01)
         print("\nYou find a familiar looking teddy bear.\n")
         print(bear)
-        print("Perhaps try searching the drawer")
+        print("Perhaps try searching the drawer or questioning a witness")
         
         points += 1
         turns -= 1 
@@ -118,7 +175,6 @@ def room():
         start()
 
     def drawer():
-        global room_finish 
         global points
         global turns
         print("You examine the drawer")
@@ -128,15 +184,14 @@ def room():
         print(ring)
         points += 1
         turns -= 1 
-        print("Perhaps try searching under the bed")
+        print("Perhaps try searching under the bed or questioning a witness")
         check_game_status() 
-        room_finish = True
 
         start()
         check_game_status()  
 
     def start(): 
-        print("\n", ("-") * 20)
+        print(("-") * 20)
         print("You have entered the room")
         print(("-") * 20)
         print("\n1: Check drawer")
@@ -145,10 +200,7 @@ def room():
         selection = int(input("\nChoose option\n"))
 
         if selection == 1:
-            if room_finish:
-                print("You have already checked!")
-            else:
-                drawer()
+             drawer()
         elif selection == 2:
             bed()
         elif selection == 3:
@@ -213,6 +265,7 @@ def question():
 
 def blood():
     print(("-") * 20)
+    print(blood_img)
     print("\n1: Examine")
     print("\n2. Leave")
     selection = int(input("\nChoose option\n"))
@@ -252,10 +305,10 @@ def initial():
 
 
 ascii_art = pyfiglet.figlet_format("Welcome")
-print(ascii_art)
+print(detective)
 
-print("You arrive at the murder scene in a bedroom. What do you do?")
+print("\nDetective, You arrive at the murder scene in a bedroom. What do you do?")
 print("You will have 5 turns to find which evil person did it.")
-print("Navigate by entering numbers shown in menus")
+print("Navigate by submitting numbers shown in menus")
 
 initial()
